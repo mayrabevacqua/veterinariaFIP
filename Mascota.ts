@@ -1,23 +1,24 @@
-
+import * as rsl from "readline-sync";
+import { Cliente } from "./Cliente";
 
 export class Mascota {
 
-    private idCliente:number;
+    protected id:number;
     private nombre:string;
     private especie:string;  
 
-    constructor( idCliente:number, nombre:string, especie:string){
-        this.idCliente = idCliente;
+    constructor( id:number, nombre:string, especie:string){
+        this.id = id;
         this.nombre = nombre;
-        this.especie = especie;
+        this.setespecie(especie);
     }
 
-    public getidCliente(): number {
-        return this.idCliente;
+    public getid(): number {
+        return this.id;
     }
 
-    public setidCliente(idCliente: number) {
-        this.idCliente = idCliente;
+    public setid(id: number) {
+        this.id = id;
     }
 
     public getnombre(): string {
@@ -33,8 +34,29 @@ export class Mascota {
     }
 
     public setespecie(especie: string) {
-        this.especie = especie;
+        const especiesValidas = ["Perro", "Gato", "Exotica"];
+        while (especiesValidas.indexOf(especie) === -1) {
+            console.log("La especie debe ser Perro, Gato o Exotica");
+            especie = rsl.question("Ingrese Especie (Perro, Gato o Exotica) :");
+        }
+        return especie;
+    }
+
+    nuevoElemento(id):Mascota {// deberia estar en Veterinaria
+        let nombre: string = rsl.question("Ingrese Nombre :");
+        let especie: string = rsl.question("Ingrese Especie :");
+        let agregarMascota: Mascota = new Mascota( id, nombre, this.setespecie(especie));
+        return agregarMascota;
     }
   
-
+    modificarElemento(): void {// :)
+        console.log("De la siguiente Mascota solo podra modificar el Nombre ");
+        let nuevaNombre: string = rsl.question("Ingrese nuevo Nombre :");
+        console.log(nuevaNombre);
+        this.setnombre(nuevaNombre);
+        console.log("Nuevo datos de la Mascota, ID: ",this.getid()," Nombre :",this.getnombre()," Especie: ",this.getespecie());
+    }
+       
+   
+    
 }

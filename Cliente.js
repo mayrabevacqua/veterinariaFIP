@@ -17,12 +17,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cliente = void 0;
 var DatoBase_1 = require("./DatoBase");
+var rsl = require("readline-sync");
 var Cliente = /** @class */ (function (_super) {
     __extends(Cliente, _super);
-    function Cliente(id, nombre, direccion, telefono, email, mascotas) {
+    function Cliente(id, nombre, direccion, telefono, email, cantVisitas) {
         var _this = _super.call(this, id, nombre, direccion, telefono) || this;
+        _this.mascotas = [];
         _this.email = email;
-        _this.mascotas = mascotas;
+        _this.cantVisitas = cantVisitas;
         return _this;
     }
     Cliente.prototype.getemail = function () {
@@ -31,11 +33,32 @@ var Cliente = /** @class */ (function (_super) {
     Cliente.prototype.setemail = function (email) {
         this.email = email;
     };
-    Cliente.prototype.getmascotas = function () {
-        return this.mascotas;
+    Cliente.prototype.getcantVisitas = function () {
+        return this.cantVisitas;
     };
-    Cliente.prototype.setmascotas = function (mascotas) {
-        this.mascotas = mascotas;
+    Cliente.prototype.setcantVisitas = function (cantVisitas) {
+        this.cantVisitas = cantVisitas;
+    };
+    Cliente.prototype.nuevoElemento = function (id) {
+        var nombre = rsl.question("Ingrese Nombre :");
+        var direccion = rsl.question("Ingrese Direccion :");
+        var telefono = rsl.question("Ingrese Telefono :");
+        var email = rsl.question("Ingrese Direccion email :");
+        var agregarCliente = new Cliente(id, nombre, direccion, telefono, email, 1);
+        return agregarCliente;
+    };
+    Cliente.prototype.modificarElemento = function () {
+        console.log("Del siguiente Cliente solo podra modificar direccion, Telefono o email ");
+        var nuevaDireccion = rsl.question("Ingrese nueva Direccion :");
+        var nuevoTelefono = rsl.questionInt("Ingrese nuevo Teleono :");
+        var nuevoemail = rsl.question("Ingrese nuevo email :");
+        this.setdireccion(nuevaDireccion);
+        this.settelefono(nuevoTelefono);
+        this.setemail(nuevoemail);
+        console.log("Nuevo datos del Cliente, ID: ", this.getid(), " Nombre :", this.getnombre, " Direccion: ", this.getdireccion(), " Telefono: ", this.gettelefono(), " email: ", this.getemail);
+    };
+    Cliente.prototype.agregarMascota = function (mascota) {
+        this.mascotas.push(mascota);
     };
     return Cliente;
 }(DatoBase_1.DatosBase));

@@ -1,11 +1,11 @@
 
 export abstract class DatosBase {
-    private id:number;
-    private nombre:string;
-    private direccion:string;
-    private telefono:number;
+    private id: number;
+    private nombre: string;
+    protected direccion: string;
+    protected telefono: number;
 
-    constructor (id:number, nombre:string, direccion:string, telefono:number){
+    constructor(id: number, nombre: string, direccion: string, telefono: number) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -43,5 +43,7 @@ export abstract class DatosBase {
     public settelefono(telefono: number) {
         this.telefono = telefono;
     }
+
+    
 
 }
