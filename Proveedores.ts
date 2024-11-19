@@ -3,13 +3,15 @@ export class Proveedores {
     private nombreProv: string;
     private direccionProv: string;
     private telProv: number;
+    private insumos: string[]=[];
 
 
-    constructor(idProveedor: number, nombreProv: string, direccionProv: string, telProv: number) {
+    constructor(idProveedor: number, nombreProv: string, direccionProv: string, telProv: number, insumos:string[]) {
         this.idProveedor = idProveedor;
         this.nombreProv = nombreProv;
         this.direccionProv = direccionProv;
         this.telProv = telProv;
+        this.insumos=insumos;
     }
 
     public getIdProveedor(): number {
@@ -28,6 +30,10 @@ export class Proveedores {
         return this.telProv;
     }
 
+    public getinsumos() : string[] {
+        return this.insumos
+    }
+
     public setIdProveedor(idProveedor: number): void {
         this.idProveedor = idProveedor;
     }
@@ -44,17 +50,23 @@ export class Proveedores {
         this.telProv = telProv;
     }
 
-    public static altaProveedor(idProveedor: number, nombreProv: string, direccionProv: string, telProv: number): Proveedores {
-        return new Proveedores(idProveedor, nombreProv, direccionProv, telProv);
+    public setinsumos(insumos : string[]) {
+        this.insumos = insumos;
+    }
+
+
+    public static altaProveedor(idProveedor: number, nombreProv: string, direccionProv: string, telProv: number, insumos:string[]): Proveedores {
+        return new Proveedores(idProveedor, nombreProv, direccionProv, telProv, insumos);
     }
 
     public static bajaProveedor(proveedor: Proveedores): void {
         // Para conversar 
     }
     
-    public modificarProveedor(nombreProv?: string, direccionProv?: string, telProv?: number): void {
+    public modificarProveedor(nombreProv?: string, direccionProv?: string, telProv?: number, insumos?: string[]): void {
         if (nombreProv) this.setNombreProv(nombreProv);
         if (direccionProv) this.setDireccionProv(direccionProv);
         if (telProv) this.setTelProv(telProv);
+        if(insumos) this.setinsumos(insumos); 
     }
 }
