@@ -18,9 +18,9 @@ let arrMascotas:Mascota[]=[];
 // arrProveedores=[proveedor1,proveedor2,proveedor3];
 
 //*******Clientes****** */
-let cliente1: Cliente = new Cliente(generadorID(), "Lucas Laplace", "Leal 633", 2284766543, "lucas@asdjd.com",5);
-let cliente2: Cliente = new Cliente(generadorID(), "Melisa Islas", "Moreno 3413", 22843456543, "Malisa@asdjd.com",3);
-let cliente3: Cliente = new Cliente(generadorID(), "Mayra Bevacqua", "San Martin 1233", 22846766543, "Mayra@asdjd.com",2);
+let cliente1: Cliente = new Cliente(generadorID(), "Lucas Laplace", "Leal 633", 2284766543, "lucas@asdjd.com",5,[]);
+let cliente2: Cliente = new Cliente(generadorID(), "Melisa Islas", "Moreno 3413", 22843456543, "Malisa@asdjd.com",3,[]);
+let cliente3: Cliente = new Cliente(generadorID(), "Mayra Bevacqua", "San Martin 1233", 22846766543, "Mayra@asdjd.com",2,[]);
 arrClientes= [cliente1, cliente2, cliente3];
 
 //8******* Mascotas ******//
@@ -29,7 +29,7 @@ let mascota2: Mascota = new Mascota(cliente2.getid(), "Goldy", "Perro");
 let mascota3: Mascota = new Mascota(cliente2.getid(), "Junaita", "Perro");
 let mascota4: Mascota = new Mascota(cliente3.getid(), "circuno", "Exotica");
 let mascota5: Mascota = new Mascota(cliente3.getid(), "anastacio", "Exotica");
-let mascota6: Mascota = new Mascota(cliente3.getid(), "Michi", "Gato")
+let mascota6: Mascota = new Mascota(cliente3.getid(), "Michi", "Gato");
 arrMascotas=[mascota1,mascota2,mascota3,mascota4,mascota5,mascota6];
 
 // Se asignan los Id a las Mascotas
@@ -127,19 +127,26 @@ function opcionVeterinaria() {
             console.log(" modificarSucursal() ");
         } else if (seleccion == 3) {
             console.log(" bajaSucursal() ");
-        } else if (seleccion == 4) {
-            let clienteNuevo :Cliente=new Cliente (generadorID()," ","",2,"",0);
-            arrClientes.push(clienteNuevo.nuevoElemento(generadorID));
-            console.log("Ingresada nuevo Cliente ");
-            console.log(clienteNuevo);
+        } else if (seleccion == 4) { // Nuevo Cliente
+            let clienteNuevo :Cliente=new Cliente (generadorID()," ","",2,"",0,[]);
+            arrClientes.push(clienteNuevo.nuevoElemento(clienteNuevo.getid()));
+            console.log(arrClientes);
         } else if (seleccion == 5) {
-            console.log("modificarClientes()");
+            console.log(arrClientes);
+            let idcliente:number = rsl.questionInt("Ingrese Id del Cliente a modificar :");
+            let aux:number=-1;
+            for (let i:number = 0;i<arrClientes.length ; i++) {
+                if (idcliente==arrClientes[i].getid()){
+                    aux=i; // guardo la posicion para signar la mascota l duenio
+                }
+            }
+            arrClientes[aux].modificarCliente();
         } else if (seleccion == 6) {
              console.log("eliminarClientes");
         } else if (seleccion == 7) {
             console.log(arrClientes);
             let idDuenio:number = rsl.questionInt("Ingrese Id del Dueño :");
-            let mascotaNueva :Mascota=new Mascota (idDuenio,"","");
+            let mascotaNueva :Mascota=new Mascota (idDuenio,"NN","Perro");// inicio Mascota Nueva
             arrMascotas.push(mascotaNueva.nuevoElemento(idDuenio));//Cargo datos de la mascota en arrayMascotas
             let aux:number=-1;
             for (let i:number = 0;i<arrClientes.length ; i++) {
@@ -149,17 +156,32 @@ function opcionVeterinaria() {
             }
             arrClientes[aux].agregarMascota(mascotaNueva);//Asignamos mascota al Cliente
             console.log(arrMascotas);
-        } else if (seleccion == 8) {
-             console.log("Mosdificar Mascota")        
-        } else if (seleccion == 9) {
+        } else if (seleccion == 8) {// Mosificar Mascota
+                console.log(arrMascotas);
+                let nombMascota:string = rsl.question("Ingrese nombre de la mascota a Modificar :");        
+                let aux:number=-1;
+                for (let i:number = 0;i<arrMascotas.length ; i++) {
+                    if (nombMascota==arrMascotas[i].getnombre()){
+                        aux=i; // guardo la posicion para signar la mascota l duenio
+                    }
+                }
+                arrMascotas[aux].modificarMascota();
+            } else if (seleccion == 9) {
              console.log("Baja Mascota")
-        } else if (seleccion == 10) {
-
-             console.log("altaProveedor()");
-        } else if (seleccion == 11) {
-
-            console.log(" modificarProveedor() ");
-        } else if (seleccion == 12) {
+        } else if (seleccion == 10) { //Agregamos proveedor 
+            //arrProveedores.push( nuevoProveedor(generadorID(),"Pedegree", "Pringles 4000",18274491,["Alimento Perros","Alimento Gatos"]));
+        } else if (seleccion == 11) { //Modificar proveedor
+            // console.log(arrProveedor);
+            // let idProveedor:number = rsl.questionInt("Ingrese Id del Proveedor a modificar :");
+            // let aux:number=-1;
+            // for (let i:number = 0;i<arrProveedor.length ; i++) {
+            //     if (idProveedor==arrProveedor[i].getid()){
+            //         aux=i; // guardo la posicion para signar la mascota l duenio
+            //     }
+            // }
+            // arrProveedor[aux].modificarProveedor();
+            
+        } else if (seleccion == 12) { //eliminar proveedor
 
             console.log(" bajaProveedor() ");
         } else if (seleccion == 13) {

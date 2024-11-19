@@ -20,11 +20,12 @@ var DatoBase_1 = require("./DatoBase");
 var rsl = require("readline-sync");
 var Cliente = /** @class */ (function (_super) {
     __extends(Cliente, _super);
-    function Cliente(id, nombre, direccion, telefono, email, cantVisitas) {
+    function Cliente(id, nombre, direccion, telefono, email, cantVisitas, mascotas) {
         var _this = _super.call(this, id, nombre, direccion, telefono) || this;
         _this.mascotas = [];
         _this.email = email;
         _this.cantVisitas = cantVisitas;
+        _this.mascotas = mascotas;
         return _this;
     }
     Cliente.prototype.getemail = function () {
@@ -44,18 +45,29 @@ var Cliente = /** @class */ (function (_super) {
         var direccion = rsl.question("Ingrese Direccion :");
         var telefono = rsl.question("Ingrese Telefono :");
         var email = rsl.question("Ingrese Direccion email :");
-        var agregarCliente = new Cliente(id, nombre, direccion, telefono, email, 1);
+        var agregarCliente = new Cliente(id, nombre, direccion, telefono, email, 1, []);
         return agregarCliente;
     };
-    Cliente.prototype.modificarElemento = function () {
-        console.log("Del siguiente Cliente solo podra modificar direccion, Telefono o email ");
-        var nuevaDireccion = rsl.question("Ingrese nueva Direccion :");
-        var nuevoTelefono = rsl.questionInt("Ingrese nuevo Teleono :");
-        var nuevoemail = rsl.question("Ingrese nuevo email :");
-        this.setdireccion(nuevaDireccion);
-        this.settelefono(nuevoTelefono);
-        this.setemail(nuevoemail);
-        console.log("Nuevo datos del Cliente, ID: ", this.getid(), " Nombre :", this.getnombre, " Direccion: ", this.getdireccion(), " Telefono: ", this.gettelefono(), " email: ", this.getemail);
+    Cliente.prototype.modificarCliente = function () {
+        var atencion = rsl.question("Ingrese SI, para ser Atendido sino se modificaran datos:");
+        if (atencion == "SI") {
+            var nuevavista = this.getcantVisitas() + 1;
+            this.setcantVisitas(nuevavista);
+            console.log("Cantidad de visitas acumuladas: ", this.getcantVisitas());
+            if (this.getcantVisitas() > 4) {
+                console.log("El Cliente es VIP, tiene un Descuento del 15% ");
+            }
+        }
+        else {
+            console.log("Del siguiente Cliente solo podra modificar direccion, Telefono o email ");
+            var nuevaDireccion = rsl.question("Ingrese nueva Direccion :");
+            var nuevoTelefono = rsl.questionInt("Ingrese nuevo Teleono :");
+            var nuevoemail = rsl.question("Ingrese nuevo email :");
+            this.setdireccion(nuevaDireccion);
+            this.settelefono(nuevoTelefono);
+            this.setemail(nuevoemail);
+            console.log("Nuevo datos del Cliente, ID: ", this.getid(), " Nombre :", this.getnombre(), " Direccion: ", this.getdireccion(), " Telefono: ", this.gettelefono(), " email: ", this.getemail());
+        }
     };
     Cliente.prototype.agregarMascota = function (mascota) {
         this.mascotas.push(mascota);

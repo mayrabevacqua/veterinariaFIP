@@ -16,17 +16,17 @@ var arrMascotas = [];
 // let proveedor3:Proveedor = new Proveedor(generadorID(),"Insumos Rodriguez", "Pellegrini 2276", 2284323401,["Alimento","Correas","Puf","Varios"]);
 // arrProveedores=[proveedor1,proveedor2,proveedor3];
 //*******Clientes****** */
-var cliente1 = new Cliente_1.Cliente(generadorID(), "Lucas Laplace", "Leal 633", 2284766543, "lucas@asdjd.com", 5);
-var cliente2 = new Cliente_1.Cliente(generadorID(), "Melisa Islas", "Moreno 3413", 22843456543, "Malisa@asdjd.com", 3);
-var cliente3 = new Cliente_1.Cliente(generadorID(), "Mayra Bevacqua", "San Martin 1233", 22846766543, "Mayra@asdjd.com", 2);
+var cliente1 = new Cliente_1.Cliente(generadorID(), "Lucas Laplace", "Leal 633", 2284766543, "lucas@asdjd.com", 5, []);
+var cliente2 = new Cliente_1.Cliente(generadorID(), "Melisa Islas", "Moreno 3413", 22843456543, "Malisa@asdjd.com", 3, []);
+var cliente3 = new Cliente_1.Cliente(generadorID(), "Mayra Bevacqua", "San Martin 1233", 22846766543, "Mayra@asdjd.com", 2, []);
 arrClientes = [cliente1, cliente2, cliente3];
 //8******* Mascotas ******//
-var mascota1 = new Mascota_1.Mascota(0, "MaryZabel", "Perro");
-var mascota2 = new Mascota_1.Mascota(0, "Goldy", "Perro");
-var mascota3 = new Mascota_1.Mascota(0, "Junaita", "Perro");
-var mascota4 = new Mascota_1.Mascota(0, "circuno", "Exotica");
-var mascota5 = new Mascota_1.Mascota(0, "anastacio", "Exotica");
-var mascota6 = new Mascota_1.Mascota(0, "Michi", "Gato");
+var mascota1 = new Mascota_1.Mascota(cliente1.getid(), "MaryZabel", "Perro");
+var mascota2 = new Mascota_1.Mascota(cliente2.getid(), "Goldy", "Perro");
+var mascota3 = new Mascota_1.Mascota(cliente2.getid(), "Junaita", "Perro");
+var mascota4 = new Mascota_1.Mascota(cliente3.getid(), "circuno", "Exotica");
+var mascota5 = new Mascota_1.Mascota(cliente3.getid(), "anastacio", "Exotica");
+var mascota6 = new Mascota_1.Mascota(cliente3.getid(), "Michi", "Gato");
 arrMascotas = [mascota1, mascota2, mascota3, mascota4, mascota5, mascota6];
 // Se asignan los Id a las Mascotas
 cliente1.agregarMascota(mascota1); //uso metodo en cliente para agregar mascotas al cliente
@@ -114,14 +114,21 @@ function opcionVeterinaria() {
         else if (seleccion == 3) {
             console.log(" bajaSucursal() ");
         }
-        else if (seleccion == 4) {
-            var clienteNuevo = new Cliente_1.Cliente(generadorID(), " ", "", 2, "", 0);
-            arrClientes.push(clienteNuevo.nuevoElemento(generadorID));
-            console.log("Ingresada nuevo Cliente ");
-            console.log(clienteNuevo);
+        else if (seleccion == 4) { // Nuevo Cliente
+            var clienteNuevo = new Cliente_1.Cliente(generadorID(), " ", "", 2, "", 0, []);
+            arrClientes.push(clienteNuevo.nuevoElemento(clienteNuevo.getid()));
+            console.log(arrClientes);
         }
         else if (seleccion == 5) {
-            console.log("modificarClientes()");
+            console.log(arrClientes);
+            var idcliente = rsl.questionInt("Ingrese Id del Cliente a modificar :");
+            var aux = -1;
+            for (var i = 0; i < arrClientes.length; i++) {
+                if (idcliente == arrClientes[i].getid()) {
+                    aux = i; // guardo la posicion para signar la mascota l duenio
+                }
+            }
+            arrClientes[aux].modificarCliente();
         }
         else if (seleccion == 6) {
             console.log("eliminarClientes");
@@ -129,7 +136,7 @@ function opcionVeterinaria() {
         else if (seleccion == 7) {
             console.log(arrClientes);
             var idDuenio = rsl.questionInt("Ingrese Id del Dueño :");
-            var mascotaNueva = new Mascota_1.Mascota(idDuenio, "", "");
+            var mascotaNueva = new Mascota_1.Mascota(idDuenio, "NN", "Perro"); // inicio Mascota Nueva
             arrMascotas.push(mascotaNueva.nuevoElemento(idDuenio)); //Cargo datos de la mascota en arrayMascotas
             var aux = -1;
             for (var i = 0; i < arrClientes.length; i++) {
@@ -137,22 +144,38 @@ function opcionVeterinaria() {
                     aux = i; // guardo la posicion para signar la mascota l duenio
                 }
             }
-            arrClientes[aux].agregarMascota(mascotaNueva);
+            arrClientes[aux].agregarMascota(mascotaNueva); //Asignamos mascota al Cliente
             console.log(arrMascotas);
         }
-        else if (seleccion == 8) {
-            console.log("Mosdificar Mascota");
+        else if (seleccion == 8) { // Mosificar Mascota
+            console.log(arrMascotas);
+            var nombMascota = rsl.question("Ingrese nombre de la mascota a Modificar :");
+            var aux = -1;
+            for (var i = 0; i < arrMascotas.length; i++) {
+                if (nombMascota == arrMascotas[i].getnombre()) {
+                    aux = i; // guardo la posicion para signar la mascota l duenio
+                }
+            }
+            arrMascotas[aux].modificarMascota();
         }
         else if (seleccion == 9) {
             console.log("Baja Mascota");
         }
-        else if (seleccion == 10) {
-            console.log("altaProveedor()");
+        else if (seleccion == 10) { //Agregamos proveedor 
+            //arrProveedores.push( nuevoProveedor(generadorID(),"Pedegree", "Pringles 4000",18274491,["Alimento Perros","Alimento Gatos"]));
         }
-        else if (seleccion == 11) {
-            console.log(" modificarProveedor() ");
+        else if (seleccion == 11) { //Modificar proveedor
+            // console.log(arrProveedor);
+            // let idProveedor:number = rsl.questionInt("Ingrese Id del Proveedor a modificar :");
+            // let aux:number=-1;
+            // for (let i:number = 0;i<arrProveedor.length ; i++) {
+            //     if (idProveedor==arrProveedor[i].getid()){
+            //         aux=i; // guardo la posicion para signar la mascota l duenio
+            //     }
+            // }
+            // arrProveedor[aux].modificarProveedor();
         }
-        else if (seleccion == 12) {
+        else if (seleccion == 12) { //eliminar proveedor
             console.log(" bajaProveedor() ");
         }
         else if (seleccion == 13) {
