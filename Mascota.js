@@ -20,6 +20,7 @@ var Mascota = /** @class */ (function () {
     };
     Mascota.prototype.setnombre = function (nombre) {
         this.nombre = nombre;
+        return nombre;
     };
     Mascota.prototype.getespecie = function () {
         return this.especie;
@@ -31,10 +32,10 @@ var Mascota = /** @class */ (function () {
         }
         return especie;
     };
-    Mascota.prototype.nuevoElemento = function (id) {
+    Mascota.prototype.nuevaMascota = function (id) {
         var nombre = rsl.question("Ingrese Nombre _:");
         var especie = rsl.question("Ingrese Especie _:");
-        var agregarMascota = new Mascota(id, nombre, this.setespecie(especie));
+        var agregarMascota = new Mascota(id, this.setnombre(nombre), this.setespecie(especie));
         return agregarMascota;
     };
     Mascota.prototype.modificarMascota = function () {

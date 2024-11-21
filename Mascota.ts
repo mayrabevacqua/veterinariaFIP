@@ -28,6 +28,7 @@ export class Mascota {
 
     public setnombre(nombre: string) {
         this.nombre = nombre;
+        return nombre;
     }
 
     public getespecie(): string {
@@ -42,10 +43,10 @@ export class Mascota {
         return especie;
     }
 
-    nuevoElemento(id):Mascota {// deberia estar en Veterinaria
+    nuevaMascota(id:number):Mascota {// deberia estar en Veterinaria
         let nombre: string = rsl.question("Ingrese Nombre _:");
         let especie: string = rsl.question("Ingrese Especie _:");
-        let agregarMascota: Mascota = new Mascota( id, nombre, this.setespecie(especie));
+        let agregarMascota: Mascota = new Mascota( id, this.setnombre(nombre), this.setespecie(especie));
         return agregarMascota;
     }
   
