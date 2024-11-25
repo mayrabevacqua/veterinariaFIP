@@ -205,7 +205,7 @@ function opcionVeterinaria() {
                 sucursal.bajaProveedor();
                 break;
 
-            case 13:
+            case 13: //Desde acá no funcionan los cases
                 // Mostrar Lista de Clientes
                 sucursal.mostrarlistaCliente(); 
                 break;
