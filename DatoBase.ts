@@ -4,6 +4,7 @@ export abstract class DatosBase {
     private nombre: string;
     protected direccion: string;
     protected telefono: number;
+    
 
     constructor(id: number, nombre: string, direccion: string, telefono: number) {
         this.id = id;
