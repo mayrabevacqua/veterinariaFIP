@@ -108,90 +108,128 @@ function validarEleccion(): number {// Se valida la elecccion del Menu
         seleccion = reValidarSeleccion;
     } return seleccion
 }
-
 function opcionVeterinaria() {
     menu();
-    let seleccion: number = validarEleccion(); //Se llama a la eleccion y validacion
+    let seleccion: number = validarEleccion(); // Se llama a la eleccion y validación
     while (seleccion != 0) {
-        if (seleccion == 1) {
-            let sucursalNueva :Veterinaria=new Veterinaria (generadorID()," "," ",2, "",[],[]);
-            arrVeterinarias.push(sucursalNueva.altaVeterinaria(generadorID()));
+        switch (seleccion) {
+            case 1:
+                // Alta Veterinaria
+                let sucursalNueva: Veterinaria = new Veterinaria(generadorID(), " ", " ", 2, "", [], []);
+                arrVeterinarias.push(sucursalNueva.altaVeterinaria(generadorID()));
+                break;
 
-        } else if (seleccion == 2) {// se modifica veterinaria2
-            for (let i:number =0; i<arrVeterinarias.length; i++) { console.log("Posicion: ",i," ",arrVeterinarias[i].getnombre()) }
-            let sucursalAModificar: number = rsl.questionInt("Ingrese la posicion de la vetinaria a Modificar: ");
-            arrVeterinarias[sucursalAModificar].modificarVeterinaria(arrVeterinarias[sucursalAModificar]); 
+            case 2:
+                // Modificar Veterinaria
+                for (let i: number = 0; i < arrVeterinarias.length; i++) {
+                    console.log("Posicion: ", i, " ", arrVeterinarias[i].getnombre());
+                }
+                let sucursalAModificar: number = rsl.questionInt("Ingrese la posicion de la veterinaria a Modificar: ");
+                arrVeterinarias[sucursalAModificar].modificarVeterinaria(arrVeterinarias[sucursalAModificar]);
+                break;
 
-        } else if (seleccion == 3) {// se elimina Veterinaria
-            for (let i:number =0; i<arrVeterinarias.length; i++) { console.log("Posicion: ",i," ",arrVeterinarias[i].getnombre()) }
-            let sucursalAEliminar: number = rsl.questionInt("Ingrese la posicion de la vetinaria a eliminar: ");
-            arrVeterinarias.splice(sucursalAEliminar, 1);
-            console.log(arrVeterinarias);
+            case 3:
+                // Eliminar Veterinaria
+                for (let i: number = 0; i < arrVeterinarias.length; i++) {
+                    console.log("Posicion: ", i, " ", arrVeterinarias[i].getnombre());
+                }
+                let sucursalAEliminar: number = rsl.questionInt("Ingrese la posicion de la veterinaria a eliminar: ");
+                arrVeterinarias.splice(sucursalAEliminar, 1);
+                console.log(arrVeterinarias);
+                break;
 
-        } else if (seleccion == 4) { // Nuevo Cliente
-           sucursal.altaCliente(generadorID());
+            case 4:
+                // Nuevo Cliente
+                sucursal.altaCliente(generadorID());
+                break;
 
-        } else if (seleccion == 5) { //ModificarCliente
-            sucursal.modificarCliente();
+            case 5:
+                // Modificar Cliente
+                sucursal.modificarCliente();
+                break;
 
-        } else if (seleccion == 6) { // baja Cliente
-             sucursal.bajaCliente();
+            case 6:
+                // Baja Cliente
+                sucursal.bajaCliente();
+                break;
 
-        } else if (seleccion == 7) { //Nueva Mascota
-            console.log(sucursal.mostrarlistaCliente());
-            let idDuenio: number = rsl.questionInt("Ingrese Id del Dueño :");
-            const clientesFiltrados =sucursal.getlistaClientes().filter(c => c.getid() ===idDuenio);
-             //filter devuelve los ID que cumplen la condicion
-            const cliente = clientesFiltrados.length >0 ? clientesFiltrados[0]:undefined;
-            if (!cliente) { // Validamos Si no encuentra el cliente
-                console.log("Cliente no encontrado.");
-            } else {
-                let mascotaNueva: Mascota= new Mascota(cliente.getid(),"","Perro") ;//= new Mascota(idDuenio, nombreMascota, tipoMascota);
-                arrMascotas.push(mascotaNueva.nuevaMascota(cliente.getid()));
-            }
+            case 7:
+                // Nueva Mascota
+                console.log(sucursal.mostrarlistaCliente());
+                let idDuenio: number = rsl.questionInt("Ingrese Id del Dueño :");
+                const clientesFiltrados = sucursal.getlistaClientes().filter(c => c.getid() === idDuenio);
+                const cliente = clientesFiltrados.length > 0 ? clientesFiltrados[0] : undefined;
+                if (!cliente) {
+                    console.log("Cliente no encontrado.");
+                } else {
+                    let mascotaNueva: Mascota = new Mascota(cliente.getid(), "", "Perro");
+                    arrMascotas.push(mascotaNueva.nuevaMascota(cliente.getid()));
+                }
+                break;
 
-        } else if (seleccion == 8) {// Modificar Mascota
-            console.log(arrMascotas);
-            let nombMascota:string = rsl.question("Ingrese nombre de la mascota a Modificar :"); 
-            const mascotasFiltradas =arrMascotas.filter(c => c.getnombre() ===nombMascota);
-             //filter devuelve elementos que cumplen la condicion
-            const mascotaAModificar = mascotasFiltradas.length >0 ? mascotasFiltradas[0]:undefined;
-            if(!mascotaAModificar) {  // validamos mascota
-                console.log(" Mascota no encontrada.");
-            }else{    
-                mascotaAModificar.modificarMascota(); }
+            case 8:
+                // Modificar Mascota
+                console.log(arrMascotas);
+                let nombMascota: string = rsl.question("Ingrese nombre de la mascota a Modificar :");
+                const mascotasFiltradas = arrMascotas.filter(c => c.getnombre() === nombMascota);
+                const mascotaAModificar = mascotasFiltradas.length > 0 ? mascotasFiltradas[0] : undefined;
+                if (!mascotaAModificar) {
+                    console.log("Mascota no encontrada.");
+                } else {
+                    mascotaAModificar.modificarMascota();
+                }
+                break;
 
-        } else if (seleccion == 9) {
-            for (let i:number =0; i<arrMascotas.length; i++) { console.log("Posicion: ",i," ",arrMascotas[i].getnombre()) }
-            let mascotaAEliminar: number = rsl.questionInt("Ingrese la posicion de la vetinaria a eliminar: ");
-            arrMascotas.splice(mascotaAEliminar, 1);
-            console.log(arrMascotas);
+            case 9:
+                // Eliminar Mascota
+                for (let i: number = 0; i < arrMascotas.length; i++) {
+                    console.log("Posicion: ", i, " ", arrMascotas[i].getnombre());
+                }
+                let mascotaAEliminar: number = rsl.questionInt("Ingrese la posicion de la mascota a eliminar: ");
+                arrMascotas.splice(mascotaAEliminar, 1);
+                console.log(arrMascotas);
+                break;
 
-        } else if (seleccion == 10) { //Agregamos proveedor 
-            sucursal.altaProveedor(generadorID());
+            case 10:
+                // Agregar Proveedor
+                sucursal.altaProveedor(generadorID());
+                break;
 
-        } else if (seleccion == 11) { //Modificar proveedor
-            sucursal.modificarProveedor();
-            
-        } else if (seleccion == 12) { //eliminar proveedor
-            sucursal.bajaProveedor();
-        
-        } else if (seleccion == 13) {//Mostramos Lista de clientes
-            sucursal.mostrarlistaCliente();
-            
-        } else if (seleccion == 14) {// Mostramos Lista de Veterinarias
-             console.log(arrVeterinarias);
+            case 11:
+                // Modificar Proveedor
+                sucursal.modificarProveedor();
+                break;
 
-        } else if (seleccion == 15) { //Mostramos arreglo de Proveedores
-            sucursal.mostrarlistaProveedores();
-            
-        } else { // mostramos arreglo de mascotas
-            console.log(arrMascotas);
-        } 
-        // Al finalizar una tarea se retoma el menu para poder seguir trabajando .
+            case 12:
+                // Eliminar Proveedor
+                sucursal.bajaProveedor();
+                break;
+
+            case 13:
+                // Mostrar Lista de Clientes
+                sucursal.mostrarlistaCliente(); 
+                break;
+
+            case 14:
+                // Mostrar Lista de Veterinarias
+                sucursal.mostrarListaSucursales(arrVeterinarias);
+                break;
+
+            case 15:
+                // Mostrar Lista de Proveedores
+                sucursal.mostrarlistaProveedores();
+                break;
+
+            default:
+                // Mostrar Lista de Mascotas de un Cliente
+                sucursal.mostrarListaMascotas(); 
+                break;
+        }
+
         menu();
-        seleccion = validarEleccion(); //Se llama a la eleccion de juego y validacion
+        seleccion = validarEleccion(); 
     }
 }
+
 //********* ejecucion del Menu *****************/
 opcionVeterinaria();
