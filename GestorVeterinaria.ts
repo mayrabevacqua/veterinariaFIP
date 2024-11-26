@@ -26,6 +26,7 @@ let mascota3: Mascota = new Mascota(cliente2.getid(), "Junaita", "Perro");
 let mascota4: Mascota = new Mascota(cliente3.getid(), "circuno", "Exotica");
 let mascota5: Mascota = new Mascota(cliente3.getid(), "anastacio", "Exotica");
 let mascota6: Mascota = new Mascota(cliente3.getid(), "Michi", "Gato");
+
 arrMascotas=[mascota1,mascota2,mascota3,mascota4,mascota5,mascota6];
 
 // Se asignan los Id a las Mascotas
@@ -79,6 +80,9 @@ function generadorID(): number {
     return validarID(nuevoId);
 }
 
+
+
+
 //************* Comienza Menu Principal *************/
 function menu() {
     console.log("*********************************************************************************");
@@ -126,6 +130,8 @@ function opcionVeterinaria() {
                 }
                 let sucursalAModificar: number = rsl.questionInt("Ingrese la posicion de la veterinaria a Modificar: ");
                 arrVeterinarias[sucursalAModificar].modificarVeterinaria(arrVeterinarias[sucursalAModificar]);
+                console.log("Veterinaria modificada");
+                
                 break;
 
             case 3:
@@ -156,7 +162,7 @@ function opcionVeterinaria() {
             case 7:
                 // Nueva Mascota
                 console.log(sucursal.mostrarlistaCliente());
-                let idDuenio: number = rsl.questionInt("Ingrese Id del Dueño :");
+                let idDuenio: number = rsl.questionInt("Ingrese Id del Duenio :");
                 const clientesFiltrados = sucursal.getlistaClientes().filter(c => c.getid() === idDuenio);
                 const cliente = clientesFiltrados.length > 0 ? clientesFiltrados[0] : undefined;
                 if (!cliente) {
@@ -222,7 +228,7 @@ function opcionVeterinaria() {
 
             default:
                 // Mostrar Lista de Mascotas de un Cliente
-                sucursal.mostrarListaMascotas(); 
+                sucursal.mostrarListaMascotas(arrMascotas); 
                 break;
         }
 

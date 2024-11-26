@@ -33,8 +33,8 @@ var Mascota = /** @class */ (function () {
         return especie;
     };
     Mascota.prototype.nuevaMascota = function (id) {
-        var nombre = rsl.question("Ingrese Nombre _:");
-        var especie = rsl.question("Ingrese Especie _:");
+        var nombre = rsl.question("Ingrese Nombre :");
+        var especie = rsl.question("Ingrese Especie :");
         var agregarMascota = new Mascota(id, this.setnombre(nombre), this.setespecie(especie));
         return agregarMascota;
     };
@@ -43,6 +43,8 @@ var Mascota = /** @class */ (function () {
         var nuevaNombre = rsl.question("Ingrese nuevo Nombre :");
         this.setnombre(nuevaNombre);
         console.log("Nuevo datos de la Mascota, ID: ", this.getid(), " Nombre :", this.getnombre(), " Especie: ", this.getespecie());
+        console.log("Mascota agregada exitosamente");
+        9;
     };
     return Mascota;
 }());

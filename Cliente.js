@@ -22,10 +22,10 @@ var Cliente = /** @class */ (function (_super) {
     __extends(Cliente, _super);
     function Cliente(id, nombre, direccion, telefono, email, cantVisitas, mascotas) {
         var _this = _super.call(this, id, nombre, direccion, telefono) || this;
-        _this.mascotas = [];
+        _this.arrMascotas = [];
         _this.email = email;
         _this.cantVisitas = cantVisitas;
-        _this.mascotas = mascotas;
+        _this.arrMascotas = mascotas;
         return _this;
     }
     Cliente.prototype.getemail = function () {
@@ -43,7 +43,7 @@ var Cliente = /** @class */ (function (_super) {
     Cliente.prototype.nuevoElemento = function (id) {
         var nombre = rsl.question("Ingrese Nombre :");
         var direccion = rsl.question("Ingrese Direccion :");
-        var telefono = rsl.question("Ingrese Telefono :");
+        var telefono = parseFloat(rsl.question("Ingrese Telefono :"));
         var email = rsl.question("Ingrese Direccion email :");
         var agregarCliente = new Cliente(id, nombre, direccion, telefono, email, 1, []);
         return agregarCliente;
@@ -70,7 +70,7 @@ var Cliente = /** @class */ (function (_super) {
         }
     };
     Cliente.prototype.agregarMascota = function (mascota) {
-        this.mascotas.push(mascota);
+        this.arrMascotas.push(mascota);
     };
     return Cliente;
 }(DatoBase_1.DatosBase));

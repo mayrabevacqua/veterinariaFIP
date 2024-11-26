@@ -44,8 +44,8 @@ export class Mascota {
     }
 
     nuevaMascota(id:number):Mascota {// deberia estar en Veterinaria
-        let nombre: string = rsl.question("Ingrese Nombre _:");
-        let especie: string = rsl.question("Ingrese Especie _:");
+        let nombre: string = rsl.question("Ingrese Nombre :");
+        let especie: string = rsl.question("Ingrese Especie :");
         let agregarMascota: Mascota = new Mascota( id, this.setnombre(nombre), this.setespecie(especie));
         return agregarMascota;
     }
@@ -55,6 +55,9 @@ export class Mascota {
         let nuevaNombre: string = rsl.question("Ingrese nuevo Nombre :");
         this.setnombre(nuevaNombre);
         console.log("Nuevo datos de la Mascota, ID: ",this.getid()," Nombre :",this.getnombre()," Especie: ",this.getespecie());
+        console.log("Mascota agregada exitosamente");9
+        
+        
     }
        
    

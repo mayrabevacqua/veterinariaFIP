@@ -2,19 +2,20 @@ import { DatosBase } from "./DatoBase";
 import { Cliente } from "./Cliente";
 import { Proveedores } from "./Proveedores";
 import * as rsl from "readline-sync";
+import { Mascota } from "./Mascota";
 
 export class Veterinaria extends DatosBase {
 
   private email: string;
-  protected listaClientes: Cliente[] = [];
-  protected listaProveedores: Proveedores[] = [];
+  protected Clientes: Cliente[] = [];
+  protected proveedores: Proveedores[] = [];
 
 
   constructor(id: number, nombre: string, direccion: string, telefono: number, email: string, listaClientes: Cliente[], listaProveedores: Proveedores[]) {
     super(id, nombre, direccion, telefono)
     this.email = email;
-    this.listaClientes = listaClientes;
-    this.listaProveedores = listaProveedores;
+    this.Clientes = listaClientes;
+    this.proveedores = listaProveedores;
   }
 
   public getemail(): string {
@@ -26,41 +27,44 @@ export class Veterinaria extends DatosBase {
   }
 
   public getlistaProveedores(): Proveedores[] {
-    return this.listaProveedores;
+    return this.proveedores;
   }
 
   public getlistaClientes(): Cliente[] {
-    return this.listaClientes;
+    return this.Clientes;
   }
+  
 
+
+  
 
   //////*****metodos********* */
 
   public agregarCliente(cliente: Cliente): void {
-    this.listaClientes.push(cliente);
+    this.Clientes.push(cliente);
   }
 
   public agregarProveedor(proveedor: Proveedores): void {
-    this.listaProveedores.push(proveedor);
+    this.proveedores.push(proveedor);
   }
 
   public mostrarlistaCliente() {
-    console.log(this.listaClientes);
+    console.log(this.Clientes);
   }
 
   public mostrarlistaProveedores() {
-    console.log(this.listaProveedores);
+    console.log(this.proveedores);
   }
 
-  public mostrarListaMascotas() { //NO ME FUNCIONA
-    console.log(this.mostrarListaMascotas);
+  public mostrarListaMascotas(arrMascotas: Mascota[]):void { 
+    console.log(arrMascotas);
   }
 
-  public mostrarListaSucursales(arrVeterinarias: Veterinaria[]) { //NO ME FUNCIONA
-    console.log(this.mostrarListaSucursales);
+  public mostrarListaSucursales(arrVeterinarias: Veterinaria[]):void { 
+    console.log(arrVeterinarias);
   }
 
-  public validarID(id: number, repetido: boolean): boolean { /// funcion para recorrer arreglos y revisar si el id esta ocupado
+  public validarID(id: number, repetido: boolean): boolean { 
     for (let proveedor of this.getlistaProveedores()) {
       if (proveedor.getid() === id) {
         repetido = true;
@@ -81,11 +85,11 @@ export class Veterinaria extends DatosBase {
   public altaVeterinaria(nuevoid: number): Veterinaria {
     const id = nuevoid; // Generdo un ID único por parametro
     const nombre = rsl.question("Ingrese Nombre de sucursal: ");
-    const direccion = rsl.question("Ingrese Dirección  de sucursal: ");
-    const telefono = rsl.questionInt("Ingrese Teléfono  de sucursal: ");
+    const direccion = rsl.question("Ingrese Direccion  de sucursal: ");
+    const telefono = rsl.questionInt("Ingrese Telefono  de sucursal: ");
     const email = rsl.question("Ingrese Email de sucursal: ");
     const nuevaVete = new Veterinaria(id, nombre, direccion, telefono, email, [], []);
-    console.log("Ingresada nueva Sucursal ");
+    console.log("Nueva sucursal agregada ");
     console.log(nuevaVete);
     return nuevaVete
   }
@@ -93,12 +97,12 @@ export class Veterinaria extends DatosBase {
   public altaCliente(nuevoid: number): void {
     const id = nuevoid; // Generdo un ID único por parametro
     const nombre = rsl.question("Ingrese Nombre del Cliente: ");
-    const direccion = rsl.question("Ingrese Dirección del Cliente: ");
-    const telefono = rsl.questionInt("Ingrese Teléfono del Cliente: ");
+    const direccion = rsl.question("Ingrese Direccion del Cliente: ");
+    const telefono = rsl.questionInt("Ingrese Telefono del Cliente: ");
     const email = rsl.question("Ingrese Email del Cliente: ");
     const nuevoCliente = new Cliente(id, nombre, direccion, telefono, email, 0, []);
-    if (!this.listaClientes.some(cliente => cliente.getid() === id)) {
-      this.listaClientes.push(nuevoCliente);
+    if (!this.Clientes.some(cliente => cliente.getid() === id)) {
+      this.Clientes.push(nuevoCliente);
       console.log("Cliente agregado exitosamente.");
     } else {
       console.log(" Ya existe un cliente con este ID.");
@@ -108,13 +112,13 @@ export class Veterinaria extends DatosBase {
   public altaProveedor(nuevoid: number): void {
     const id = nuevoid; // Generdo un ID único por parametro
     const nombre = rsl.question("Ingrese Nombre del Proveedor: ");
-    const direccion = rsl.question("Ingrese Dirección del Proveedor: ");
-    const telefono = rsl.questionInt("Ingrese Teléfono del Proveedor: ");
+    const direccion = rsl.question("Ingrese Direccion del Proveedor: ");
+    const telefono = rsl.questionInt("Ingrese Telefono del Proveedor: ");
     const email = rsl.question("Ingrese Email del Proveedor: ");
     const insumos = rsl.question("Ingrese Insumos que ofrece (separados por comas): ").split(",");
     const nuevoProveedor = new Proveedores(id, nombre, direccion, telefono, email, insumos);
-    if (!this.listaProveedores.some(proveedor => proveedor.getid() === id)) {
-      this.listaProveedores.push(nuevoProveedor);
+    if (!this.proveedores.some(proveedor => proveedor.getid() === id)) {
+      this.proveedores.push(nuevoProveedor);
       console.log("Proveedor agregado exitosamente.");
     } else {
       console.log(" Ya existe un proveedor con este ID.");
@@ -124,7 +128,7 @@ export class Veterinaria extends DatosBase {
 
 
   public modificarCliente(): void {// :)
-    console.log(this.listaClientes); //Seleccion de Cliente a Modificar
+    console.log(this.Clientes); //Seleccion de Cliente a Modificar
     let idCliente: number = rsl.questionInt("Ingrese Id del Cliente a modificar :");
     const clientesFiltrados = this.getlistaClientes().filter(c => c.getid() === idCliente);
     //filter devuelve elementos que cumplen la condicion
@@ -144,7 +148,7 @@ export class Veterinaria extends DatosBase {
       } else {// seccion para Modificar Datos del Cliente.
         console.log("Del siguiente Cliente solo podra modificar direccion, Telefono o email ");
         let nuevaDireccion: string = rsl.question("Ingrese nueva Direccion :");
-        let nuevoTelefono: number = rsl.questionInt("Ingrese nuevo Teleono :");
+        let nuevoTelefono: number = rsl.questionInt("Ingrese nuevo Telefono :");
         let nuevoemail: string = rsl.question("Ingrese nuevo email :");
         cliente.setdireccion(nuevaDireccion);
         cliente.settelefono(nuevoTelefono);
@@ -155,7 +159,7 @@ export class Veterinaria extends DatosBase {
   }
 
   public modificarProveedor(): void {// :)
-    console.log(this.listaProveedores);// Seleccion de Proveedor a Modificar
+    console.log(this.proveedores);// Seleccion de Proveedor a Modificar
     let idProveedor: number = rsl.questionInt("Ingrese Id del Proveedor a modificar :");
     const proveedoresFiltrados = this.getlistaProveedores().filter(c => c.getid() === idProveedor);
     //filter devuelve elementos que cumplen la condicion
@@ -177,10 +181,10 @@ export class Veterinaria extends DatosBase {
 
   public modificarVeterinaria(veterinaria: Veterinaria): void {// :)
     console.log(veterinaria);// Seleccion de Proveedor a Modificar
-    console.log("Del siguiente Veterinaria solo podra modificar nombre, direccion, Telefono o email ");
+    console.log("De la siguiente Veterinaria solo podra modificar nombre, direccion, Telefono o email ");
     let nuevoNombre: string = rsl.question("Ingrese nuevo Nombre :");
     let nuevaDireccion: string = rsl.question("Ingrese nueva Direccion :");
-    let nuevoTelefono: number = rsl.questionInt("Ingrese nuevo Teleono :");
+    let nuevoTelefono: number = rsl.questionInt("Ingrese nuevo Telefono :");
     let nuevoemail: string = rsl.question("Ingrese nuevo email :");
     this.setnombre(nuevoNombre);
     this.setdireccion(nuevaDireccion);
@@ -191,7 +195,7 @@ export class Veterinaria extends DatosBase {
   }
   /***************** Bajas  ********************** */
   public bajaCliente(): void {
-    console.log(this.listaClientes); //Seleccion de Cliente a Eliminar
+    console.log(this.Clientes); //Seleccion de Cliente a Eliminar
     let idCliente: number = rsl.questionInt("Ingrese Id del Cliente a eliminar :");
     const clientesFiltrados = this.getlistaClientes().filter(c => c.getid() === idCliente);
     //filter devuelve elementos que cumplen la condicion
@@ -200,16 +204,16 @@ export class Veterinaria extends DatosBase {
       console.log(" Cliente no encontrado.");
     } else {
       // Seccion para la eliminacion
-      let posicionCliente: number = this.listaClientes.indexOf(clienteAEliminar);
+      let posicionCliente: number = this.Clientes.indexOf(clienteAEliminar);
       if (posicionCliente !== -1) {
-        this.listaClientes.splice(posicionCliente, 1);
+        this.Clientes.splice(posicionCliente, 1);
         console.log("cliente eliminado exitosamente.");
       }
     }
   }
 
   public bajaProveedor(): void {
-    console.log(this.listaProveedores);  //Seleccionde Proveedor a eliminar
+    console.log(this.proveedores);  //Seleccionde Proveedor a eliminar
     let idProveedor: number = rsl.questionInt("Ingrese Id del Proveedor a Eliminar :");
     const proveedoresFiltrados = this.getlistaProveedores().filter(c => c.getid() === idProveedor);
     //filter devuelve elementos que cumplen la condicion
@@ -218,9 +222,9 @@ export class Veterinaria extends DatosBase {
       console.log(" Proveedor no encontrado.");
     } else {
       // Seccion para la eliminacion
-      let posicionProveedor: number = this.listaProveedores.indexOf(proveedorAEliminar);
+      let posicionProveedor: number = this.proveedores.indexOf(proveedorAEliminar);
       if (posicionProveedor !== -1) {
-        this.listaProveedores.splice(posicionProveedor, 1);
+        this.proveedores.splice(posicionProveedor, 1);
       }
     }
   }

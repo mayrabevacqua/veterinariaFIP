@@ -24,11 +24,11 @@ var Veterinaria = /** @class */ (function (_super) {
     __extends(Veterinaria, _super);
     function Veterinaria(id, nombre, direccion, telefono, email, listaClientes, listaProveedores) {
         var _this = _super.call(this, id, nombre, direccion, telefono) || this;
-        _this.listaClientes = [];
-        _this.listaProveedores = [];
+        _this.arrClientes = [];
+        _this.arrProveedores = [];
         _this.email = email;
-        _this.listaClientes = listaClientes;
-        _this.listaProveedores = listaProveedores;
+        _this.arrClientes = listaClientes;
+        _this.arrProveedores = listaProveedores;
         return _this;
     }
     Veterinaria.prototype.getemail = function () {
@@ -38,23 +38,29 @@ var Veterinaria = /** @class */ (function (_super) {
         this.email = email;
     };
     Veterinaria.prototype.getlistaProveedores = function () {
-        return this.listaProveedores;
+        return this.arrProveedores;
     };
     Veterinaria.prototype.getlistaClientes = function () {
-        return this.listaClientes;
+        return this.arrClientes;
     };
     //////*****metodos********* */
     Veterinaria.prototype.agregarCliente = function (cliente) {
-        this.listaClientes.push(cliente);
+        this.arrClientes.push(cliente);
     };
     Veterinaria.prototype.agregarProveedor = function (proveedor) {
-        this.listaProveedores.push(proveedor);
+        this.arrProveedores.push(proveedor);
     };
     Veterinaria.prototype.mostrarlistaCliente = function () {
-        console.log(this.listaClientes);
+        console.log(this.arrClientes);
     };
     Veterinaria.prototype.mostrarlistaProveedores = function () {
-        console.log(this.listaProveedores);
+        console.log(this.arrProveedores);
+    };
+    Veterinaria.prototype.mostrarListaMascotas = function (arrMascotas) {
+        console.log(arrMascotas);
+    };
+    Veterinaria.prototype.mostrarListaSucursales = function (arrVeterinarias) {
+        console.log(arrVeterinarias);
     };
     Veterinaria.prototype.validarID = function (id, repetido) {
         for (var _i = 0, _a = this.getlistaProveedores(); _i < _a.length; _i++) {
@@ -77,23 +83,23 @@ var Veterinaria = /** @class */ (function (_super) {
     Veterinaria.prototype.altaVeterinaria = function (nuevoid) {
         var id = nuevoid; // Generdo un ID único por parametro
         var nombre = rsl.question("Ingrese Nombre de sucursal: ");
-        var direccion = rsl.question("Ingrese Dirección  de sucursal: ");
-        var telefono = rsl.questionInt("Ingrese Teléfono  de sucursal: ");
+        var direccion = rsl.question("Ingrese Direccion  de sucursal: ");
+        var telefono = rsl.questionInt("Ingrese Telefono  de sucursal: ");
         var email = rsl.question("Ingrese Email de sucursal: ");
         var nuevaVete = new Veterinaria(id, nombre, direccion, telefono, email, [], []);
-        console.log("Ingresada nueva Sucursal ");
+        console.log("Nueva sucursal agregada ");
         console.log(nuevaVete);
         return nuevaVete;
     };
     Veterinaria.prototype.altaCliente = function (nuevoid) {
         var id = nuevoid; // Generdo un ID único por parametro
         var nombre = rsl.question("Ingrese Nombre del Cliente: ");
-        var direccion = rsl.question("Ingrese Dirección del Cliente: ");
-        var telefono = rsl.questionInt("Ingrese Teléfono del Cliente: ");
+        var direccion = rsl.question("Ingrese Direccion del Cliente: ");
+        var telefono = rsl.questionInt("Ingrese Telefono del Cliente: ");
         var email = rsl.question("Ingrese Email del Cliente: ");
         var nuevoCliente = new Cliente_1.Cliente(id, nombre, direccion, telefono, email, 0, []);
-        if (!this.listaClientes.some(function (cliente) { return cliente.getid() === id; })) {
-            this.listaClientes.push(nuevoCliente);
+        if (!this.arrClientes.some(function (cliente) { return cliente.getid() === id; })) {
+            this.arrClientes.push(nuevoCliente);
             console.log("Cliente agregado exitosamente.");
         }
         else {
@@ -103,13 +109,13 @@ var Veterinaria = /** @class */ (function (_super) {
     Veterinaria.prototype.altaProveedor = function (nuevoid) {
         var id = nuevoid; // Generdo un ID único por parametro
         var nombre = rsl.question("Ingrese Nombre del Proveedor: ");
-        var direccion = rsl.question("Ingrese Dirección del Proveedor: ");
-        var telefono = rsl.questionInt("Ingrese Teléfono del Proveedor: ");
+        var direccion = rsl.question("Ingrese Direccion del Proveedor: ");
+        var telefono = rsl.questionInt("Ingrese Telefono del Proveedor: ");
         var email = rsl.question("Ingrese Email del Proveedor: ");
         var insumos = rsl.question("Ingrese Insumos que ofrece (separados por comas): ").split(",");
         var nuevoProveedor = new Proveedores_1.Proveedores(id, nombre, direccion, telefono, email, insumos);
-        if (!this.listaProveedores.some(function (proveedor) { return proveedor.getid() === id; })) {
-            this.listaProveedores.push(nuevoProveedor);
+        if (!this.arrProveedores.some(function (proveedor) { return proveedor.getid() === id; })) {
+            this.arrProveedores.push(nuevoProveedor);
             console.log("Proveedor agregado exitosamente.");
         }
         else {
@@ -118,7 +124,7 @@ var Veterinaria = /** @class */ (function (_super) {
     };
     /********************* Modificaciones *********************** */
     Veterinaria.prototype.modificarCliente = function () {
-        console.log(this.listaClientes); //Seleccion de Cliente a Modificar
+        console.log(this.arrClientes); //Seleccion de Cliente a Modificar
         var idCliente = rsl.questionInt("Ingrese Id del Cliente a modificar :");
         var clientesFiltrados = this.getlistaClientes().filter(function (c) { return c.getid() === idCliente; });
         //filter devuelve elementos que cumplen la condicion
@@ -140,7 +146,7 @@ var Veterinaria = /** @class */ (function (_super) {
             else { // seccion para Modificar Datos del Cliente.
                 console.log("Del siguiente Cliente solo podra modificar direccion, Telefono o email ");
                 var nuevaDireccion = rsl.question("Ingrese nueva Direccion :");
-                var nuevoTelefono = rsl.questionInt("Ingrese nuevo Teleono :");
+                var nuevoTelefono = rsl.questionInt("Ingrese nuevo Telefono :");
                 var nuevoemail = rsl.question("Ingrese nuevo email :");
                 cliente.setdireccion(nuevaDireccion);
                 cliente.settelefono(nuevoTelefono);
@@ -150,7 +156,7 @@ var Veterinaria = /** @class */ (function (_super) {
         }
     };
     Veterinaria.prototype.modificarProveedor = function () {
-        console.log(this.listaProveedores); // Seleccion de Proveedor a Modificar
+        console.log(this.arrProveedores); // Seleccion de Proveedor a Modificar
         var idProveedor = rsl.questionInt("Ingrese Id del Proveedor a modificar :");
         var proveedoresFiltrados = this.getlistaProveedores().filter(function (c) { return c.getid() === idProveedor; });
         //filter devuelve elementos que cumplen la condicion
@@ -171,10 +177,10 @@ var Veterinaria = /** @class */ (function (_super) {
     };
     Veterinaria.prototype.modificarVeterinaria = function (veterinaria) {
         console.log(veterinaria); // Seleccion de Proveedor a Modificar
-        console.log("Del siguiente Veterinaria solo podra modificar nombre, direccion, Telefono o email ");
+        console.log("De la siguiente Veterinaria solo podra modificar nombre, direccion, Telefono o email ");
         var nuevoNombre = rsl.question("Ingrese nuevo Nombre :");
         var nuevaDireccion = rsl.question("Ingrese nueva Direccion :");
-        var nuevoTelefono = rsl.questionInt("Ingrese nuevo Teleono :");
+        var nuevoTelefono = rsl.questionInt("Ingrese nuevo Telefono :");
         var nuevoemail = rsl.question("Ingrese nuevo email :");
         this.setnombre(nuevoNombre);
         this.setdireccion(nuevaDireccion);
@@ -185,7 +191,7 @@ var Veterinaria = /** @class */ (function (_super) {
     };
     /***************** Bajas  ********************** */
     Veterinaria.prototype.bajaCliente = function () {
-        console.log(this.listaClientes); //Seleccion de Cliente a Eliminar
+        console.log(this.arrClientes); //Seleccion de Cliente a Eliminar
         var idCliente = rsl.questionInt("Ingrese Id del Cliente a eliminar :");
         var clientesFiltrados = this.getlistaClientes().filter(function (c) { return c.getid() === idCliente; });
         //filter devuelve elementos que cumplen la condicion
@@ -195,15 +201,15 @@ var Veterinaria = /** @class */ (function (_super) {
         }
         else {
             // Seccion para la eliminacion
-            var posicionCliente = this.listaClientes.indexOf(clienteAEliminar);
+            var posicionCliente = this.arrClientes.indexOf(clienteAEliminar);
             if (posicionCliente !== -1) {
-                this.listaClientes.splice(posicionCliente, 1);
+                this.arrClientes.splice(posicionCliente, 1);
                 console.log("cliente eliminado exitosamente.");
             }
         }
     };
     Veterinaria.prototype.bajaProveedor = function () {
-        console.log(this.listaProveedores); //Seleccionde Proveedor a eliminar
+        console.log(this.arrProveedores); //Seleccionde Proveedor a eliminar
         var idProveedor = rsl.questionInt("Ingrese Id del Proveedor a Eliminar :");
         var proveedoresFiltrados = this.getlistaProveedores().filter(function (c) { return c.getid() === idProveedor; });
         //filter devuelve elementos que cumplen la condicion
@@ -213,9 +219,9 @@ var Veterinaria = /** @class */ (function (_super) {
         }
         else {
             // Seccion para la eliminacion
-            var posicionProveedor = this.listaProveedores.indexOf(proveedorAEliminar);
+            var posicionProveedor = this.arrProveedores.indexOf(proveedorAEliminar);
             if (posicionProveedor !== -1) {
-                this.listaProveedores.splice(posicionProveedor, 1);
+                this.arrProveedores.splice(posicionProveedor, 1);
             }
         }
     };
